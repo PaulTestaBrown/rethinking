@@ -1,0 +1,12 @@
+# Chapter 1: The Golem of Prague
+
+## Notes
+
+Offers a critique of classical null hyptothesis testing approaches to statisitcal inference.
+
+Hypotheses can be associated with multiple process models that correspond to, sometimes overlapping statistical models
+
+## Excercises
+
+No exercises!
+

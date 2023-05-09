@@ -1,0 +1,83 @@
+#Chapter 2. Small Worlds and Large Worlds
+
+## Notes
+
+```{r}
+ways <- c(0, 3, 8, 9, 0)
+ways/sum(ways)
+```
+
+
+```{r}
+dbinom( 6 , size=9 , prob=0.5 )
+```
+
+```{r}
+# define grid
+p_grid <- seq( from=0 , to=1 , length.out=20 )
+# define prior
+prior <- rep( 1 , 20 )
+# compute likelihood at each value in grid
+likelihood <- dbinom( 6 , size=9 , prob=p_grid )
+# compute product of likelihood and prior
+unstd.posterior <- likelihood * prior
+# standardize the posterior, so it sums to 1
+posterior <- unstd.posterior / sum(unstd.posterior)
+```
+
+```{r}
+plot( p_grid , posterior , type="b" ,
+    xlab="probability of water" , ylab="posterior probability" )
+mtext( "20 points" )
+```
+
+```{r}
+prior <- ifelse( p_grid < 0.5 , 0 , 1 )
+likelihood <- dbinom( 6 , size=9 , prob=p_grid )
+# compute product of likelihood and prior
+unstd.posterior <- likelihood * prior
+# standardize the posterior, so it sums to 1
+posterior <- unstd.posterior / sum(unstd.posterior)
+plot( p_grid , posterior , type="b" ,
+    xlab="probability of water" , ylab="posterior probability" )
+mtext( "20 points" )
+
+
+prior <- exp( -5*abs( p_grid - 0.5 ) )
+likelihood <- dbinom( 6 , size=9 , prob=p_grid )
+# compute product of likelihood and prior
+unstd.posterior <- likelihood * prior
+# standardize the posterior, so it sums to 1
+posterior <- unstd.posterior / sum(unstd.posterior)
+plot( p_grid , posterior , type="b" ,
+    xlab="probability of water" , ylab="posterior probability" )
+mtext( "20 points" )
+```
+
+
+
+## Excercises
+
+
+2E1. Which of the expressions below correspond to the statement: the probability of rain on Monday?
+
+- (1) Pr(rain)
+- **(2) Pr(rain|Monday)**
+- (3) Pr(Monday|rain)
+- **(4) Pr(rain,Monday)/Pr(Monday)**
+
+Given that it is monday, what is the probaility that it rains.
+
+$$
+Pr(Rain|Monday) = \frac{Pr(rain, Monday)}{Pr(Monday)}
+$$
+
+:::question
+> **2E2.** Which of the following statements corresponds to the expression: Pr(Monday|rain)?  
+>   (1) The probability of rain on Monday.  
+>   (2) The probability of rain, given that it is Monday.  
+>   **(3) The probability that it is Monday, given that it is raining.  **
+>   (4) The probability that it is Monday and that it is raining.
+:::
+
+

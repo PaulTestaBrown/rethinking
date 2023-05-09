@@ -1,0 +1,14 @@
+# Chapter 8. Conditional Manatees
+
+## Notes
+
+```{r}
+# In Text Examples
+```
+
+
+
+## Excercises
+
+
+

@@ -1,0 +1,14 @@
+# Chapter 14. Adventures in Covariance
+
+## Notes
+
+```{r}
+# In Text Examples
+```
+
+
+
+## Excercises
+
+
+

@@ -1,0 +1,14 @@
+# Chapter 16. Generalized Linear Madness
+
+## Notes
+
+```{r}
+# In Text Examples
+```
+
+
+
+## Excercises
+
+
+

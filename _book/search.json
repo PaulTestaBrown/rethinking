@@ -1,0 +1,254 @@
+[
+  {
+    "objectID": "ch02.html#notes",
+    "href": "ch02.html#notes",
+    "title": "3  Chapter 2. Small Worlds and Large Worlds",
+    "section": "3.1 Notes",
+    "text": "3.1 Notes\n\nways <- c(0, 3, 8, 9, 0)\nways/sum(ways)\n\n[1] 0.00 0.15 0.40 0.45 0.00\n\n\n\ndbinom( 6 , size=9 , prob=0.5 )\n\n[1] 0.1640625\n\n\n\n# define grid\np_grid <- seq( from=0 , to=1 , length.out=20 )\n# define prior\nprior <- rep( 1 , 20 )\n# compute likelihood at each value in grid\nlikelihood <- dbinom( 6 , size=9 , prob=p_grid )\n# compute product of likelihood and prior\nunstd.posterior <- likelihood * prior\n# standardize the posterior, so it sums to 1\nposterior <- unstd.posterior / sum(unstd.posterior)\n\n\nplot( p_grid , posterior , type=\"b\" ,\n    xlab=\"probability of water\" , ylab=\"posterior probability\" )\nmtext( \"20 points\" )\n\n\n\n\n\nprior <- ifelse( p_grid < 0.5 , 0 , 1 )\nlikelihood <- dbinom( 6 , size=9 , prob=p_grid )\n# compute product of likelihood and prior\nunstd.posterior <- likelihood * prior\n# standardize the posterior, so it sums to 1\nposterior <- unstd.posterior / sum(unstd.posterior)\nplot( p_grid , posterior , type=\"b\" ,\n    xlab=\"probability of water\" , ylab=\"posterior probability\" )\nmtext( \"20 points\" )\n\n\n\nprior <- exp( -5*abs( p_grid - 0.5 ) )\nlikelihood <- dbinom( 6 , size=9 , prob=p_grid )\n# compute product of likelihood and prior\nunstd.posterior <- likelihood * prior\n# standardize the posterior, so it sums to 1\nposterior <- unstd.posterior / sum(unstd.posterior)\nplot( p_grid , posterior , type=\"b\" ,\n    xlab=\"probability of water\" , ylab=\"posterior probability\" )\nmtext( \"20 points\" )"
+  },
+  {
+    "objectID": "ch02.html#excercises",
+    "href": "ch02.html#excercises",
+    "title": "3  Chapter 2. Small Worlds and Large Worlds",
+    "section": "3.2 Excercises",
+    "text": "3.2 Excercises\n2E1. Which of the expressions below correspond to the statement: the probability of rain on Monday?\n\n\nPr(rain)\n\n(2) Pr(rain|Monday)\n\nPr(Monday|rain)\n\n(4) Pr(rain,Monday)/Pr(Monday)\n\nGiven that it is monday, what is the probaility that it rains.\n\\[\nPr(Rain|Monday) = \\frac{Pr(rain, Monday)}{Pr(Monday)}\n\\]\n\n\n2E2. Which of the following statements corresponds to the expression: Pr(Monday|rain)?\n(1) The probability of rain on Monday.\n(2) The probability of rain, given that it is Monday.\n(3) The probability that it is Monday, given that it is raining.  (4) The probability that it is Monday and that it is raining."
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "ch01.html#notes",
+    "href": "ch01.html#notes",
+    "title": "2  Chapter 1: The Golem of Prague",
+    "section": "2.1 Notes",
+    "text": "2.1 Notes\nOffers a critique of classical null hyptothesis testing approaches to statisitcal inference.\nHypotheses can be associated with multiple process models that correspond to, sometimes overlapping statistical models"
+  },
+  {
+    "objectID": "ch01.html#excercises",
+    "href": "ch01.html#excercises",
+    "title": "2  Chapter 1: The Golem of Prague",
+    "section": "2.2 Excercises",
+    "text": "2.2 Excercises\nNo exercises!"
+  },
+  {
+    "objectID": "ch03.html#notes",
+    "href": "ch03.html#notes",
+    "title": "4  Chapter 3. Sampling the Imaginary",
+    "section": "4.1 Notes",
+    "text": "4.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch03.html#excercises",
+    "href": "ch03.html#excercises",
+    "title": "4  Chapter 3. Sampling the Imaginary",
+    "section": "4.2 Excercises",
+    "text": "4.2 Excercises"
+  },
+  {
+    "objectID": "ch04.html#notes",
+    "href": "ch04.html#notes",
+    "title": "5  Chapter 4. Geocentric Models",
+    "section": "5.1 Notes",
+    "text": "5.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch04.html#excercises",
+    "href": "ch04.html#excercises",
+    "title": "5  Chapter 4. Geocentric Models",
+    "section": "5.2 Excercises",
+    "text": "5.2 Excercises"
+  },
+  {
+    "objectID": "ch05.html#notes",
+    "href": "ch05.html#notes",
+    "title": "6  Chapter 5. The Many Variables & The Spurious Waffles",
+    "section": "6.1 Notes",
+    "text": "6.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch05.html#excercises",
+    "href": "ch05.html#excercises",
+    "title": "6  Chapter 5. The Many Variables & The Spurious Waffles",
+    "section": "6.2 Excercises",
+    "text": "6.2 Excercises"
+  },
+  {
+    "objectID": "ch06.html#notes",
+    "href": "ch06.html#notes",
+    "title": "7  Chapter 6. The Haunted DAG & The Causal Terror",
+    "section": "7.1 Notes",
+    "text": "7.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch06.html#excercises",
+    "href": "ch06.html#excercises",
+    "title": "7  Chapter 6. The Haunted DAG & The Causal Terror",
+    "section": "7.2 Excercises",
+    "text": "7.2 Excercises"
+  },
+  {
+    "objectID": "ch07.html#notes",
+    "href": "ch07.html#notes",
+    "title": "8  Chapter 7. Ulysses’ Compass",
+    "section": "8.1 Notes",
+    "text": "8.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch07.html#excercises",
+    "href": "ch07.html#excercises",
+    "title": "8  Chapter 7. Ulysses’ Compass",
+    "section": "8.2 Excercises",
+    "text": "8.2 Excercises"
+  },
+  {
+    "objectID": "ch08.html#notes",
+    "href": "ch08.html#notes",
+    "title": "9  Chapter 8. Conditional Manatees",
+    "section": "9.1 Notes",
+    "text": "9.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch08.html#excercises",
+    "href": "ch08.html#excercises",
+    "title": "9  Chapter 8. Conditional Manatees",
+    "section": "9.2 Excercises",
+    "text": "9.2 Excercises"
+  },
+  {
+    "objectID": "ch09.html#notes",
+    "href": "ch09.html#notes",
+    "title": "10  Chapter 9. Markov Chain Monte Carlo",
+    "section": "10.1 Notes",
+    "text": "10.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch09.html#excercises",
+    "href": "ch09.html#excercises",
+    "title": "10  Chapter 9. Markov Chain Monte Carlo",
+    "section": "10.2 Excercises",
+    "text": "10.2 Excercises"
+  },
+  {
+    "objectID": "ch10.html#notes",
+    "href": "ch10.html#notes",
+    "title": "11  Chapter 10. Big Entropy and the Generalized Linear Model",
+    "section": "11.1 Notes",
+    "text": "11.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch10.html#excercises",
+    "href": "ch10.html#excercises",
+    "title": "11  Chapter 10. Big Entropy and the Generalized Linear Model",
+    "section": "11.2 Excercises",
+    "text": "11.2 Excercises"
+  },
+  {
+    "objectID": "ch11.html#notes",
+    "href": "ch11.html#notes",
+    "title": "12  Chapter 11. God Spiked the Integers",
+    "section": "12.1 Notes",
+    "text": "12.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch11.html#excercises",
+    "href": "ch11.html#excercises",
+    "title": "12  Chapter 11. God Spiked the Integers",
+    "section": "12.2 Excercises",
+    "text": "12.2 Excercises"
+  },
+  {
+    "objectID": "ch12.html#notes",
+    "href": "ch12.html#notes",
+    "title": "13  Chapter 12. Monsters and Mixtures",
+    "section": "13.1 Notes",
+    "text": "13.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch12.html#excercises",
+    "href": "ch12.html#excercises",
+    "title": "13  Chapter 12. Monsters and Mixtures",
+    "section": "13.2 Excercises",
+    "text": "13.2 Excercises"
+  },
+  {
+    "objectID": "ch13.html#notes",
+    "href": "ch13.html#notes",
+    "title": "14  Chapter 13. Models With Memory",
+    "section": "14.1 Notes",
+    "text": "14.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch13.html#excercises",
+    "href": "ch13.html#excercises",
+    "title": "14  Chapter 13. Models With Memory",
+    "section": "14.2 Excercises",
+    "text": "14.2 Excercises"
+  },
+  {
+    "objectID": "ch14.html#notes",
+    "href": "ch14.html#notes",
+    "title": "15  Chapter 14. Adventures in Covariance",
+    "section": "15.1 Notes",
+    "text": "15.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch14.html#excercises",
+    "href": "ch14.html#excercises",
+    "title": "15  Chapter 14. Adventures in Covariance",
+    "section": "15.2 Excercises",
+    "text": "15.2 Excercises"
+  },
+  {
+    "objectID": "ch15.html#notes",
+    "href": "ch15.html#notes",
+    "title": "16  Chapter 15. Missing Data and Other Opportunities",
+    "section": "16.1 Notes",
+    "text": "16.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch15.html#excercises",
+    "href": "ch15.html#excercises",
+    "title": "16  Chapter 15. Missing Data and Other Opportunities",
+    "section": "16.2 Excercises",
+    "text": "16.2 Excercises"
+  },
+  {
+    "objectID": "ch16.html#notes",
+    "href": "ch16.html#notes",
+    "title": "17  Chapter 16. Generalized Linear Madness",
+    "section": "17.1 Notes",
+    "text": "17.1 Notes\n\n# In Text Examples"
+  },
+  {
+    "objectID": "ch16.html#excercises",
+    "href": "ch16.html#excercises",
+    "title": "17  Chapter 16. Generalized Linear Madness",
+    "section": "17.2 Excercises",
+    "text": "17.2 Excercises"
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "18  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "rethinking",
+    "section": "",
+    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2"
+  }
+]

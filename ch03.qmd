@@ -1,0 +1,14 @@
+# Chapter 3. Sampling the Imaginary
+
+## Notes
+
+```{r}
+# In Text Examples
+```
+
+
+
+## Excercises
+
+
+

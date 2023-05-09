@@ -1,0 +1,14 @@
+# Chapter 11. God Spiked the Integers
+
+## Notes
+
+```{r}
+# In Text Examples
+```
+
+
+
+## Excercises
+
+
+

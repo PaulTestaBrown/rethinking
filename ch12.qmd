@@ -1,0 +1,14 @@
+# Chapter 12. Monsters and Mixtures
+
+## Notes
+
+```{r}
+# In Text Examples
+```
+
+
+
+## Excercises
+
+
+

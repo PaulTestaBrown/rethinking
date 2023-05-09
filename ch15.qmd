@@ -1,0 +1,14 @@
+# Chapter 15. Missing Data and Other Opportunities
+
+## Notes
+
+```{r}
+# In Text Examples
+```
+
+
+
+## Excercises
+
+
+
