@@ -1,11 +1,292 @@
 # Chapter 3. Sampling the Imaginary
 
+```{r}
+library(tidyverse)
+library(rethinking)
+```
+
+
 ## Notes
+
+$$
+Pr(\text{vampire}\mid \text{positve}) = \frac{Pr(\text{positive}\mid\text{vampire})}{Pr(\text{positive})}
+$$
+
+```{r}
+vamp <- tibble(
+  pr_pos_vamp   = .95,
+  pr_pos_mortal = .01,
+  pr_vamp       = .001
+) %>% 
+  mutate(
+    pr_pos = pr_pos_vamp * pr_vamp + pr_pos_mortal* (1-pr_vamp),
+    pr_vamp_pos = pr_pos_vamp * pr_vamp / pr_pos
+  ) 
+
+glimpse(vamp)
+```
+
+Classic testing example: Even with a precise test, for a rare event the probability that you're a vampire (or have covid), given a positive result is relatively rare.
+
+
+What if we made the test more precise?
+
+```{r}
+vamp <- tibble(
+  pr_pos_vamp   = .99,
+  pr_pos_mortal = .01,
+  pr_vamp       = .001
+) %>% 
+  mutate(
+    pr_pos = pr_pos_vamp * pr_vamp + pr_pos_mortal* (1-pr_vamp),
+    pr_vamp_pos = pr_pos_vamp * pr_vamp / pr_pos
+  ) 
+
+glimpse(vamp)
+```
+
+
+Example in natural frequencies
+
+- 100,000 people, 100 are vampires
+- Of the 100 vampires, 95 test positive
+- Of the 99,900 mortals, 999 will test positive
+
+Out of 1094 positives only 95 are vampires
+
+
+$$
+Pr(\text{vampire}\mid \text{positve}) = \frac{95}{1094} \approx 0.087
+$$
+
+> The posterior distribution is a probability distribution.
+And like all probability distributions, we can imagine drawing samples from it. The sampled events in this case are parameter values. Most parameters have no exact empirical realization. The Bayesian formalism treats parameter distributions as relative plausibility, not as any physical random process. In any event, randomness is always a property of informa- tion, never of the real world. But inside the computer, parameters are just as empirical as the outcome of a coin flip or a die toss or an agricultural experiment. The posterior defines the expected frequency that different parameter values will appear, once we start plucking parameters out of it.
+
+
+>Working with samples transforms a problem in calculus into a problem in data summary, into a frequency format problem.
 
 ```{r}
 # In Text Examples
 ```
 
+## Sampling form a grid-appoximate poster
+
+```{r}
+p_grid <- seq( from=0 , to=1 , length.out=1000 ) 
+prob_p <- rep( 1 , 1000 )
+prob_data <- dbinom( 6 , size=9 , prob=p_grid ) 
+posterior <- prob_data * prob_p
+posterior <- posterior / sum(posterior)
+
+# Sample from posterior
+samples <- sample(p_grid, prob = posterior, size = 1e4, replace=T)
+
+plot(samples)
+dens(samples)
+```
+
+```{r}
+# Tidy example
+
+n <- 1001
+n_success <- 6
+n_trials <- 9
+
+d <- tibble(
+  p_grid = seq(0, 1, length.out = n),
+  prior = 1 
+) %>% 
+  mutate(
+    likelihood = dbinom(n_success, n_trials, prob = p_grid)
+  ) %>% 
+  mutate(
+    posterior = (likelihood * prior)/sum(likelihood * prior) 
+  )
+
+n_samples <- 1e4
+
+set.seed(3)
+
+samples <- d %>% 
+  sample_n(n_samples, weight = posterior, replace =T)
+
+samples %>% 
+  mutate(
+    sample_number = 1:n()
+  ) -> samples
+
+samples %>% 
+  ggplot(aes(sample_number, p_grid))+
+  geom_point(size = 1/10)
+
+samples %>% 
+  ggplot(aes(p_grid))+
+  geom_density(fill = "black")
+```
+
+
+## Sampling to Summarize
+
+- Intervals of defined boundaries
+
+```{r}
+# p < 0.5
+
+d %>% 
+  filter( p_grid < 0.5) %>% 
+  summarise(sum = sum(posterior))
+
+mean(samples$p_grid < 0.5)
+
+samples %>% 
+  filter(p_grid < 0.5) %>% 
+  summarise(
+    sum = n()/n_samples
+  )
+
+
+samples %>% 
+  filter(p_grid > 0.5 & p_grid < .75) %>% 
+  summarise(
+    sum = n()/n_samples
+  )
+```
+
+
+Recreate figure 3.2
+
+```{r}
+fig3.2a <- d %>% 
+  ggplot(aes(x = p_grid)) +
+  geom_line(aes(y = posterior)) +
+  geom_ribbon(data = d %>% filter(p_grid < .5),
+              aes(ymin = 0, ymax = posterior)) +
+  labs(x = "proportion of water (p)",
+       y = "density")
+
+fig3.2b<- d %>% 
+  ggplot(aes(x = p_grid)) +
+  geom_line(aes(y = posterior)) +
+  geom_ribbon(data = d %>% filter(p_grid > .5 & p_grid < .75),
+              aes(ymin = 0, ymax = posterior)) +
+  labs(x = "proportion of water (p)",
+       y = "density")
+
+q_80 <- quantile(samples$p_grid, prob =.8)
+
+fig3.2c <- d %>% 
+  ggplot(aes(x = p_grid)) +
+  geom_line(aes(y = posterior)) +
+  geom_ribbon(data = d %>% filter(p_grid < q_80),
+              aes(ymin = 0, ymax = posterior)) +
+  labs(x = "proportion of water (p)",
+       y = "density")
+
+q_10 <- quantile(samples$p_grid, prob =.1)
+q_90 <- quantile(samples$p_grid, prob =.9)
+
+
+
+
+fig3.2d <- d %>% 
+  ggplot(aes(x = p_grid)) +
+  geom_line(aes(y = posterior)) +
+  geom_ribbon(data = d %>% filter(p_grid > q_10 &
+                                    p_grid < q_90),
+              aes(ymin = 0, ymax = posterior)) +
+  labs(x = "proportion of water (p)",
+       y = "density")
+
+
+# fig3.2d <- d %>% 
+#   ggplot(aes(x = p_grid)) +
+#   geom_line(aes(y = posterior)) +
+#   geom_ribbon(data = d %>%
+#   mutate(
+#     q = cumsum(posterior)
+#   ) %>% filter(q  > .1 &
+#                                     q < .9),
+#               aes(ymin = 0, ymax = posterior)) +
+#   labs(x = "proportion of water (p)",
+#        y = "density")
+
+```
+
+
+
+```{r}
+# Update dbinom
+n_success <- 3
+n_trials <- 3
+
+# update `d`
+d <-
+  d %>% 
+  mutate(likelihood = dbinom(n_success, size = n_trials, prob = p_grid)) %>% 
+  mutate(posterior  = (likelihood * prior) / sum(posterior))
+
+# make the next part reproducible
+set.seed(3)
+
+# here's our new samples tibble
+(
+  samples <-
+    d %>% 
+    sample_n(size = n_samples, weight = posterior, replace = T)
+)
+
+```
+
+```{r}
+quantile(samples$p_grid, prob = c(.25, .75))
+rethinking::PI(samples$p_grid, prob = .5)
+library(tidybayes)
+
+median_qi(samples$p_grid, .width = .5)
+median_qi(samples$p_grid, .width = c(.5, .8, .99))
+
+```
+
+
+```{r}
+# HPDI
+rethinking::HPDI(samples$p_grid, prob = .5)
+mode_hdi(samples$p_grid, .width = .5)
+
+```
+
+The highest posterior density interval (HPDI) is the narrowes interval containing the specified probability mass. 
+
+
+Figure 3.3
+```{r}
+d %>% 
+  ggplot(aes(x = p_grid)) +
+  # check out our sweet `qi()` indexing
+  geom_ribbon(data = d %>% filter(p_grid > qi(samples$p_grid, .width = .5)[1] & 
+                                    p_grid < qi(samples$p_grid, .width = .5)[2]),
+              aes(ymin = 0, ymax = posterior),
+              fill = "grey75") +
+  geom_line(aes(y = posterior)) +
+  labs(subtitle = "50% Percentile Interval",
+       x = "proportion of water (p)",
+       y = "density")
+```
+
+
+
+```{r}
+d %>% 
+  ggplot(aes(x = p_grid)) +
+  geom_ribbon(data = d %>% filter(p_grid > hdi(samples$p_grid, .width = .5)[1] & 
+                                    p_grid < hdi(samples$p_grid, .width = .5)[2]),
+              aes(ymin = 0, ymax = posterior),
+              fill = "grey75") +
+  geom_line(aes(y = posterior)) +
+  labs(subtitle = "50% HPDI",
+       x = "proportion of water (p)",
+       y = "density")
+```
 
 
 ## Excercises
